@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.consumerMapper">
+    <resultMap id="BaseResultMap" type="com.domain.consumer" >
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="sex" jdbcType="TINYINT" property="sex"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="mail" jdbcType="VARCHAR" property="mail"/>
+        <result column="birth" jdbcType="TIMESTAMP" property="birth"/>
+        <result column="intro" jdbcType="VARCHAR" property="intro"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="location" jdbcType="VARCHAR" property="location"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,username,name,password,sex,phone,mail,birth,intro,pic,create_time,location
+    </sql>
+
+    <insert id="insert" parameterType="com.domain.consumer">
+        insert into consumer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="name != null">
+                name,
+            </if>            
+            <if test="password != null">
+                password,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="mail != null">
+                mail,
+            </if>
+            <if test="birth != null">
+                birth,
+            </if>
+            <if test="intro != null">
+                intro,
+            </if>
+            <if test="pic != null">
+                pic,
+            </if>            
+            <if test="location != null">
+                location,
+            </if>
+            create_time
+        </trim>
+        <trim prefix=" values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="username != null">
+                #{username},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="password != null">
+                #{password},
+            </if>
+            <if test="sex != null">
+                #{sex},
+            </if>
+            <if test="phone != null">
+                #{phone},
+            </if>
+            <if test="mail != null">
+                #{mail},
+            </if>
+            <if test="birth != null">
+                #{birth},
+            </if>
+            <if test="intro != null">
+                #{intro},
+            </if>
+            <if test="pic != null">
+                #{pic},
+            </if>
+            <if test="location != null">
+                #{location},
+            </if>
+            now()
+        </trim>        
+    </insert>
+    
+    <update id="update" parameterType="com.domain.consumer">
+        update consumer
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="mail != null">
+                mail = #{mail},
+            </if>
+            <if test="birth != null">
+                birth = #{birth},
+            </if>
+            <if test="intro != null">
+                intro = #{intro},
+            </if>
+            <if test="pic != null">
+                pic = #{pic},
+            </if>            
+            <if test="location != null">
+                location = #{location},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- parameterType 参数 -->
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from consumer
+        where id=#{id}
+    </delete>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from consumer
+        where id=#{id}
+    </select>
+
+    <select id="allConsumer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from consumer
+    </select>
+
+    <select id="verifyPassword" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        select count(*)
+        from consumer
+        where username = #{username} and password = #{password}
+    </select>
+
+    <select id="getByUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from consumer
+        where username = #{username}
+    </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

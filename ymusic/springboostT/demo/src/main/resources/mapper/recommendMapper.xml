@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.recommendMapper">  
+
+    <resultMap id="RecommendResultMap" type="java.lang.String" >
+        <result column="song_id" jdbcType="VARCHAR" property="songId"/>
+    </resultMap>    
+
+    <insert id="insert" parameterType="com.domain.recommend">
+        insert into recommend
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="songId != null">
+                song_id,
+            </if>
+            create_time
+        </trim>
+        <trim prefix=" values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="songId != null">
+                #{songId},
+            </if>
+            now()
+        </trim>   
+     </insert>
+
+    <select id="getRecommend" resultMap="RecommendResultMap" parameterType="java.lang.String">
+        select
+        song_id
+        from recommend
+        where user_id=#{userid}
+    </select>
+</mapper>

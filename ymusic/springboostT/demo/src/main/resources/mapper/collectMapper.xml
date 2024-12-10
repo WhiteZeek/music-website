@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.collectMapper">
+    <resultMap id="BaseResultMap" type="com.domain.collect" >
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="type_id" jdbcType="INTEGER" property="songId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,type,type_id,style
+    </sql>
+
+    <insert id="insert" parameterType="com.domain.collect">
+        insert into collect
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="songId != null">
+                type_id,
+            </if>
+            <if test="style != null">
+                style,
+            </if>
+        </trim>
+        <trim prefix=" values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="songId != null">
+                #{songId},
+            </if>
+            <if test="style != null">
+                #{style},
+            </if>
+        </trim>        
+    </insert>
+
+    <delete id="delete">
+        delete from collect
+        where id=#{id}
+    </delete>
+
+    <delete id="deleteByUserIdSongId" parameterType="java.lang.Integer">
+        delete from collect
+        where user_id = #{userId} and type_id = #{songId} and type = #{Type}
+    </delete>
+
+    <select id="allCollect" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from collect
+    </select>
+
+    <select id="collectOfUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from collect
+        where user_id = #{userId}
+    </select>
+
+    <select id="existSongId" resultType="java.lang.Integer">
+        select count(*)
+        from collect
+        where user_id = #{userId} and type_id = #{songId} and type = #{Type}
+    </select>
+
+    <select id="numOfSong" resultType="java.lang.Integer">
+        select count(*)
+        from collect
+        where type_id = #{songId} and type = 0
+    </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
